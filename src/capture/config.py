@@ -19,13 +19,14 @@ MONITOR_NUMBER = 1  # 0 for all monitors, 1 for primary, 2+ for secondary
 CAPTURE_FPS = 3  # Target frames per second for continuous capture
 
 # Board extraction settings
-BOARD_GRID_SIZE = 8  # 8x8 Othello board
-BOARD_REGION = None  # (x, y, width, height) - Auto-detect if None
+BOARD_GRID_SIZE = 6  # 8x8 Othello board
+BOARD_REGION = (36, 264, 380, 380)
 
 # Hand extraction settings
+PLAYER_HAND_REGION = (0, 860, 462, 183)  # x, y, w, h inside phone image
 HANDS_REGIONS = {
-    "player": None,  # (x, y, width, height) - Auto-detect if None
-    "opponent": None,  # (x, y, width, height) - Auto-detect if None
+    "player": PLAYER_HAND_REGION,
+    "opponent": None,
 }
 
 # Image processing settings
@@ -40,8 +41,15 @@ BOARD_FILENAME_FORMAT = "board_{timestamp}.png"
 HAND_FILENAME_FORMAT = "hand_{player}_{timestamp}.png"
 CELL_FILENAME_FORMAT = "cell_{row}_{col}_{timestamp}.png"
 
+# AirServer phone region (for 1920x1080 screenshot sample)
+PHONE_REGION = (729, 32, 462, 1043)  # x, y, w, h
+SAVE_PHONE_FRAMES = True
+PHONE_DIR = CROPS_DIR / "phone"
+PHONE_FILENAME_FORMAT = "phone_{timestamp}.png"
+PHONE_SIZE = (462, 1043)
+
 # Create directories if they don't exist
 def ensure_directories():
     """Create all necessary directories for data storage."""
-    for directory in [RAW_DIR, BOARD_DIR, HANDS_DIR, CELLS_DIR]:
+    for directory in [RAW_DIR, BOARD_DIR, HANDS_DIR, CELLS_DIR, PHONE_DIR]:
         directory.mkdir(parents=True, exist_ok=True)

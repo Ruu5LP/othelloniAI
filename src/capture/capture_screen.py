@@ -117,10 +117,16 @@ def continuous_capture(
                 should_continue = callback(frame, frame_start)
                 if not should_continue:
                     break
-            else:
-                # Default behavior: save frame
-                if config.SAVE_RAW_FRAMES:
-                    save_frame(frame)
+                else:
+                    # Default behavior: save frame
+                    if config.SAVE_RAW_FRAMES:
+                        save_frame(frame)
+
+            # Save phone-only crop
+            if getattr(config, "SAVE_PHONE_FRAMES", False):
+                x, y, w, h = config.PHONE_REGION
+                phone = frame[y:y+h, x:x+w]
+                save_frame(phone, output_dir=config.PHONE_DIR, filename=None)
             
             # Check duration limit
             if duration is not None:
