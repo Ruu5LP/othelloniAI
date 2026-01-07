@@ -3,7 +3,7 @@
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Callable, Optional, Tuple
 
 import cv2
 import mss
@@ -26,6 +26,12 @@ def capture_screen(monitor: Optional[int] = None) -> np.ndarray:
     monitor_num = monitor if monitor is not None else config.MONITOR_NUMBER
     
     with mss.mss() as sct:
+        # Validate monitor number
+        if monitor_num < 0 or monitor_num >= len(sct.monitors):
+            raise ValueError(
+                f"Monitor {monitor_num} not found. Available monitors: 0-{len(sct.monitors)-1}"
+            )
+        
         # Get monitor info
         if monitor_num == 0:
             monitor_info = sct.monitors[0]  # All monitors
@@ -82,7 +88,7 @@ def save_frame(
 def continuous_capture(
     duration: Optional[float] = None,
     fps: Optional[int] = None,
-    callback=None
+    callback: Optional[Callable[[np.ndarray, float], bool]] = None
 ) -> None:
     """
     Continuously capture screenshots at a specified frame rate.

@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import cv2
 import numpy as np
@@ -109,6 +109,10 @@ def extract_cells(
     Returns:
         List[List[np.ndarray]]: 2D list of cell images [row][col].
     """
+    # Validate grid_size
+    if grid_size <= 0:
+        raise ValueError(f"grid_size must be positive, got {grid_size}")
+    
     height, width = board.shape[:2]
     cell_height = height // grid_size
     cell_width = width // grid_size
@@ -150,7 +154,7 @@ def process_frame(
     extract_board_region: bool = True,
     extract_hand_regions: bool = True,
     extract_board_cells: bool = True
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Process a frame and extract all relevant regions.
     
