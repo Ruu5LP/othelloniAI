@@ -1,0 +1,12 @@
+# Screen capture
+mss>=9.0.1
+
+# Image processing
+opencv-python>=4.8.0
+numpy>=1.24.0
+
+# Future dependencies (commented for now)
+# fastapi>=0.100.0
+# uvicorn[standard]>=0.23.0
+# python-multipart>=0.0.6
+# pydantic>=2.0.0
