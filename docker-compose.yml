@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  othelloniai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: othelloniai:latest
+    container_name: othelloniai-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+    # Uncomment when FastAPI service is implemented
+    # command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+    networks:
+      - othelloniai-network
+
+  # Future service: ML inference container
+  # ml-service:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.ml
+  #   image: othelloniai-ml:latest
+  #   container_name: othelloniai-ml
+  #   ports:
+  #     - "8001:8001"
+  #   volumes:
+  #     - ./models:/app/models
+  #     - ./data:/app/data
+  #   depends_on:
+  #     - othelloniai
+  #   networks:
+  #     - othelloniai-network
+
+networks:
+  othelloniai-network:
+    driver: bridge
+
+volumes:
+  data:
+    driver: local
