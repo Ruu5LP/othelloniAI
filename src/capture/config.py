@@ -16,7 +16,7 @@ CELLS_DIR = CROPS_DIR / "cells"
 
 # Screen capture settings
 MONITOR_NUMBER = 1  # 0 for all monitors, 1 for primary, 2+ for secondary
-CAPTURE_FPS = 30  # Target frames per second for continuous capture
+CAPTURE_FPS = 3  # Target frames per second for continuous capture
 
 # Board extraction settings
 BOARD_GRID_SIZE = 8  # 8x8 Othello board

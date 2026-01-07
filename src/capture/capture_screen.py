@@ -135,3 +135,10 @@ def continuous_capture(
     
     except KeyboardInterrupt:
         print("\nCapture stopped by user.")
+
+if __name__ == "__main__":
+    config.ensure_directories()
+    print("[capture] start (duration=10s)")
+    continuous_capture(duration=10)
+
+
